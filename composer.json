@@ -1,0 +1,83 @@
+{
+    "type": "project",
+    "description": "Module model skeleton.",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "laravel/framework": "^11.9",
+        "laravel/tinker": "^2.9",
+        "ramsey/uuid": "^4.7",
+        "spatie/laravel-route-attributes": "^1.22",
+        "zircote/swagger-php": "^4.10"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "friendsofphp/php-cs-fixer": "^3.62",
+        "infection/infection": "^0.29.6",
+        "larastan/larastan": "^2.9",
+        "laravel/pint": "^1.13",
+        "laravel/sail": "^1.26",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit": "^11.0.1",
+        "rector/rector": "^1.2",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gateway\\": "src/Gateway",
+            "Modules\\": "src/Modules",
+            "Common\\": "src/Common",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "src/Common/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "phpcs": "@phpcs:check",
+        "phpcs:check": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes --dry-run",
+        "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes",
+
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php artisan migrate --graceful --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "infection/extension-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
